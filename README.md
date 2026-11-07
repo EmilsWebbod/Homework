@@ -2,8 +2,9 @@
 
 - Started 08:26
 - Using WebRTC ( want to learn what and how to set this up )
-- Used some time to select setup and getting up and running when its been a while since I used any build tools.  
-- Started the task around 9:00 for real.
+- Used some time to select setup and getting up and running when it's been a while since I used any build tools.  
+- Started to code around 9:00.
+- Started to use Claude 15:30 to help me with the last bit to move faster with some visuals ( This is where PR came in )
 
 ## Requirements
 `node.js@22+` locally on your machine

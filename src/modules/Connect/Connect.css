@@ -1,0 +1,40 @@
+.connect {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.connect__label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.connect__input {
+    border: 1px solid var(--color-grey);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xs) var(--spacing-md);
+    color: var(--color);
+    background: var(--paper-background);
+}
+
+.connect__input:focus {
+    outline: none;
+    border-color: var(--color-active);
+}
+
+.connect__button {
+    margin-top: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--color-active);
+    color: var(--paper-background);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.connect__button:disabled {
+    background: var(--background-grey);
+    color: var(--color-grey-dark);
+    cursor: not-allowed;
+}

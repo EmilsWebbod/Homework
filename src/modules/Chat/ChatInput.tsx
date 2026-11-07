@@ -1,5 +1,5 @@
 import './ChatInput.css';
-import {type ReactElement, type SubmitEvent, useCallback, useState} from "react";
+import {type KeyboardEvent, type ReactElement, type SubmitEvent, useCallback, useState} from "react";
 import type {EditEvent, Message} from "../../../types/messages.js";
 import {CloseIcon, SendIcon} from "../../components/Icons/Icons.js";
 
@@ -19,6 +19,7 @@ export function ChatInput({onSend, editing, onEdit, onCancelEdit}: Props): React
 
     const handleOnSubmit = useCallback((event: SubmitEvent<HTMLFormElement>): void => {
         event.preventDefault();
+        if (!value.trim()) return;
         if (editing) {
             onEdit({id: editing.id, text: value});
             onCancelEdit();
@@ -28,12 +29,20 @@ export function ChatInput({onSend, editing, onEdit, onCancelEdit}: Props): React
         setValue('');
     }, [onSend, onEdit, onCancelEdit, editing, value])
 
+    // Enter sends, Shift+Enter adds a new line
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>): void => {
+        if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
+        event.preventDefault();
+        event.currentTarget.form?.requestSubmit();
+    }
+
     return (
         <form onSubmit={handleOnSubmit}>
             <div className="chat-input">
                 <textarea
                     value={value}
                     onChange={e => setValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     placeholder="Write to everyone"
                     autoFocus={!!editing}
                 />

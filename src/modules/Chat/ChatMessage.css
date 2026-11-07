@@ -12,6 +12,11 @@
     font-weight: bold;
 }
 
+.message__text {
+    /* Keep line breaks from Shift+Enter */
+    white-space: pre-wrap;
+}
+
 .message__date{
     display: flex;
 }

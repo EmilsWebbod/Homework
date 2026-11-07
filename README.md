@@ -23,12 +23,15 @@ We create a Messages class to handle messages and storage logic (Then we can eas
 - - [x] Participants
 - - [x] Messages
 - [x] Create automated tests for backend logic
-- [ ] Create styles from design
+- [x] Create styles from design
 - - [x] Paper
 - - [x] Tabs
 - - [x] Participants
 - - [x] Chat Message
-- - [ ] Chat box
-- [ ] Create participants list
-- [ ] Create chat
+- - [x] Chat box
+- [x] Create participants list
+- [x] Create chat
+- [ ] Create context to keep the state in one place
 - [ ] Connect actions with chat
+- - [ ] Send messages with send to server
+- - [ ] Get 

@@ -7,6 +7,8 @@
   --border-radius: 6px;
 
   --color: #1f2028;
+  --color-grey: #D8D8D8;
+  --color-grey-dark: #777777;
   --color-active: #0067F4;
   --background-grey: #E6E6E6;
   --paper-background: #ffffff;
@@ -57,7 +59,7 @@ hr {
 }
 
 svg {
-  color: black;
+  color: var(--color-grey-dark);
   width: 24px;
   height: 24px;
 }

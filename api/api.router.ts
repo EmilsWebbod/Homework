@@ -28,10 +28,8 @@ api.post('/', (req, res): void => {
     });
 
     pc.onDataChannel((dc): void => {
-        console.log(dc.getId())
         dc.onMessage((message): void => {
             if (typeof message !== 'string') return;
-            console.log('message', message)
             try {
                 const event: ClientEvent = JSON.parse(message);
                 // todo: should verify content is ClientEvent
@@ -86,6 +84,7 @@ api.post('/', (req, res): void => {
         dc.onClosed((): void => {
             participants.delete(dc);
             broadcastParticipants();
+            broadcastMessages();
         })
     })
 

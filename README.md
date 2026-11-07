@@ -91,5 +91,5 @@ Events the client will trigger to the backend
 - [x] Handle left event as message
 - [x] Edit message
 - [x] Delete message
-- [ ] Fix that users are removed on closed window ( user left event )
+- [x] Fix that users are removed on closed window ( user left event )
 - [x] Improve som visuals in chat

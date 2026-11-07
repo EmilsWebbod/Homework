@@ -5,6 +5,7 @@
 - Used some time to select setup and getting up and running when it's been a while since I used any build tools.  
 - Started to code around 9:00.
 - Started to use Claude 15:30 to help me with the last bit to move faster with some visuals ( This is where PR came in )
+- Ended Claude session 16:30 (Helped me with some visuals for connection and chat flow, edit and delete)
 
 ## Requirements
 `node.js@22+` locally on your machine

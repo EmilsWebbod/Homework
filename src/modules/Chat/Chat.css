@@ -12,4 +12,10 @@
     flex-direction: column;
     gap: var(--spacing-lg);
     overflow-y: scroll;
+    padding-right: var(--spacing-md);
+}
+
+/* Push messages to the bottom when there are few of them */
+.chat__messages > :first-child {
+    margin-top: auto;
 }

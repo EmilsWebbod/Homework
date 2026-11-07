@@ -1,11 +1,13 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import type {ChatEvent, ConnectEvent, DisconnectEvent} from "../../types/messages.js";
+import type {ClientEvent, EditEvent} from "../../types/messages.js";
 
 interface RTCPeerConnectionReturn {
     connected: boolean;
     connect: (name: string) => void;
     disconnect: () => void;
     chat: (text: string) => void;
+    edit: (message: EditEvent['value']) => void;
+    remove: (id: string) => void;
     error: Error | null;
 }
 
@@ -50,7 +52,17 @@ export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
         peer.current.sendChat(text);
     }, []);
 
-    return { error, connected, connect, disconnect, chat }
+    const edit = useCallback((message: EditEvent['value']): void => {
+        if (!peer.current) return;
+        peer.current.editChat(message);
+    }, []);
+
+    const remove = useCallback((id: string): void => {
+        if (!peer.current) return;
+        peer.current.deleteChat(id);
+    }, []);
+
+    return {error, connected, connect, disconnect, chat, edit, remove}
 }
 
 interface RTCPeerOptions {
@@ -98,15 +110,23 @@ class RTCPeer {
     }
 
     public connect(name: string): void {
-        this.sendJSON({ type: 'connect', value: name } satisfies ConnectEvent);
+        this.sendJSON({type: 'connect', value: name});
     }
 
     public disconnect(): void {
-        this.sendJSON({ type: 'disconnect', value: '' } satisfies DisconnectEvent);
+        this.sendJSON({type: 'disconnect', value: ''});
     }
 
     public sendChat(text: string): void {
-        this.sendJSON({ type: 'chat', value: text} satisfies ChatEvent)
+        this.sendJSON({type: 'chat', value: text})
+    }
+
+    public editChat(message: EditEvent['value']): void {
+        this.sendJSON({type: 'edit', value: message})
+    }
+
+    public deleteChat(id: string): void {
+        this.sendJSON({type: 'delete', value: id})
     }
 
     public close(): void {
@@ -115,7 +135,7 @@ class RTCPeer {
         this.dc.close();
     }
 
-    private sendJSON<T>(data: T): void {
+    private sendJSON<T extends ClientEvent>(data: T): void {
         this.send(JSON.stringify(data))
     }
 

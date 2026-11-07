@@ -13,3 +13,7 @@ Using WebRTC ( want to learn what and how to set this up )
 - [x] Add option to disconnect
 - [x] Add option to edit message
 - [x] Add option to delete message
+- [ ] Create styles from design
+- [ ] Create participants list
+- [ ] Create chat
+- [ ] Connect actions with chat

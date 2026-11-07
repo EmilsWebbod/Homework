@@ -23,6 +23,11 @@
 - React is in `./src` and API in `./api`
 - Api could be split into more files, but not really needed for this project
 - Decided to create components by manually. Next time I would Claude to this for me, when it was time consuming.
+
+## Notes that should be fixed
+- Participants object should use redis or similar to keep state. 
+- Messages should be saved in DB to not loose data
+- Events sends all the messages on new message. We should only send the latest message to all users to save bandwith
 - 
 
 ## Testing

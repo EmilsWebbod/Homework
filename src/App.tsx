@@ -3,6 +3,7 @@ import './App.css'
 import {Paper} from "./components/Paper/Paper.js";
 import {Tab, Tabs} from "./components/Tabs/Tabs.js";
 import {Chat} from "./modules/Chat/Chat.js";
+import {Connect} from "./modules/Connect/Connect.js";
 import {Participants} from "./modules/Participants/Participants.js";
 import {RTCContext, RTCProvider} from "./RTC/rtc.context.js";
 import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
@@ -25,46 +26,14 @@ function App(): ReactElement {
 
 function Main(): ReactElement {
   const { state, onRTCEvent } = useContext(RTCContext);
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
   const [tab, setTab] = useState<number>(TabType.Participants)
   const {connected, connect, disconnect, chat} = useRTCPeerConnection(onRTCEvent)
 
   if (!connected) {
     return (
-        <div>
-          {connected ? (
-              <>
-                <input value={message} onChange={event => setMessage(event.target.value)}/>
-                <button
-                    className="counter"
-                    onClick={(): void => chat(message)}
-                >
-                  Send
-                </button>
-              </>
-          ) : (
-              <>
-                <input value={name} onChange={event => setName(event.target.value)}/>
-                <button
-                    className="counter"
-                    onClick={(): void => connect(name)}
-                    disabled={!name}
-                >
-                  Connect
-                </button>
-              </>
-          )}
-
-          {connected ? (
-              <button
-                  className="counter"
-                  onClick={(): void => disconnect()}
-              >
-                Disconnect
-              </button>
-          ): null}
-        </div>
+        <Paper title="Status meeting standup" style={{ width: '450px'}}>
+          <Connect onConnect={connect} />
+        </Paper>
     )
   }
 

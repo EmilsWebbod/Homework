@@ -1,7 +1,8 @@
 import {Router} from "express";
 import nodeDataChannel, {type DataChannel, type PeerConnection} from 'node-datachannel'
 import {randomUUID} from "node:crypto";
-import type {ClientEvent, Message, Participant, ServerEvent} from "../types/messages.js";
+import type {ClientEvent, Message, ServerEvent} from "../types/messages.js";
+import {Participants} from "./participants/Participants.js";
 
 const closedStates = ['closed', 'failed'];
 nodeDataChannel.initLogger('Debug', (level, message): void => {
@@ -9,7 +10,7 @@ nodeDataChannel.initLogger('Debug', (level, message): void => {
 })
 
 const peers = new Set<PeerConnection>()
-const participants = new Map<DataChannel, Participant>()
+const participants = new Participants<DataChannel>();
 
 // todo: This is to simple setup. should be moved to DB. Not needed for this project
 const messages: Message[] = [];
@@ -29,6 +30,7 @@ api.post('/', (req, res): void => {
     });
 
     pc.onDataChannel((dc): void => {
+        console.log(dc.getId())
         dc.onMessage((message): void => {
             if (typeof message !== 'string') return;
             console.log('message', message)
@@ -38,10 +40,7 @@ api.post('/', (req, res): void => {
                 // todo: verify that value is correct. Can use joi or something similar to verify
                 switch (event.type) {
                     case "connect":
-                        participants.set(dc, {
-                            id: randomUUID(),
-                            name: event.value
-                        });
+                        participants.add(dc, event.value);
                         broadcastParticipants();
                         break;
                     case 'disconnect':
@@ -100,7 +99,7 @@ api.post('/', (req, res): void => {
 
 function broadcastParticipants(): void {
     console.debug('Broadcast participants', participants.size);
-    broadcast({ type: 'participants', data: [...participants.values()] })
+    broadcast({ type: 'participants', data: participants.array() })
 }
 
 function broadcastMessages(): void {

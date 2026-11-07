@@ -18,6 +18,8 @@ Testing the WebRTC logic can be tricky when we need to mock server and express s
 - [x] Add option to edit message
 - [x] Add option to delete message
 - [ ] Refactor backend for separation of concern
+- - [x] Participants
+- - [ ] Messages
 - [ ] Create automated tests for backend logic
 - [ ] Create styles from design
 - - [x] Paper

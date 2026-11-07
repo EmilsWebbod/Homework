@@ -44,12 +44,7 @@ api.post('/', (req, res): void => {
                         break;
                     }
                     case 'disconnect': {
-                        const participant = participants.get(dc);
-                        if (!participant) break;
-                        participants.delete(dc);
-                        messages.left(participant);
-                        broadcastParticipants();
-                        broadcastMessages();
+                        leave(dc);
                         break;
                     }
                     case "chat": {
@@ -82,10 +77,9 @@ api.post('/', (req, res): void => {
             }
         })
 
+        // Fires when the browser tab is closed or the connection drops
         dc.onClosed((): void => {
-            participants.delete(dc);
-            broadcastParticipants();
-            broadcastMessages();
+            leave(dc);
         })
     })
 
@@ -99,6 +93,15 @@ api.post('/', (req, res): void => {
 
     peers.add(pc)
 })
+
+function leave(dc: DataChannel): void {
+    const participant = participants.get(dc);
+    if (!participant) return;
+    participants.delete(dc);
+    messages.left(participant);
+    broadcastParticipants();
+    broadcastMessages();
+}
 
 function broadcastParticipants(): void {
     console.debug('Broadcast participants', participants.size);

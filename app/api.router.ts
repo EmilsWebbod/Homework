@@ -4,12 +4,14 @@ import {randomUUID} from "node:crypto";
 import type {ClientEvent, Message, Participant, ServerEvent} from "../types/messages.js";
 
 const closedStates = ['closed', 'failed'];
-nodeDataChannel.initLogger('Debug', (level, message) => {
+nodeDataChannel.initLogger('Debug', (level, message): void => {
     console.log(level, message)
 })
 
 const peers = new Set<PeerConnection>()
 const participants = new Map<DataChannel, Participant>()
+
+// todo: This is to simple setup. should be moved to DB. Not needed for this project
 const messages: Message[] = [];
 
 const api = Router();
@@ -32,6 +34,8 @@ api.post('/', (req, res): void => {
             console.log('message', message)
             try {
                 const event: ClientEvent = JSON.parse(message);
+                // todo: should verify content is ClientEvent
+                // todo: verify that value is correct. Can use joi or something similar to verify
                 switch (event.type) {
                     case "connect":
                         participants.set(dc, {
@@ -44,12 +48,22 @@ api.post('/', (req, res): void => {
                         participants.delete(dc);
                         broadcastParticipants();
                         break;
-                    case "chat":
+                    case "chat": {
                         const participant = participants.get(dc);
                         if (!participant) break;
                         messages.push({ id: randomUUID(), text: event.value, participant })
                         broadcastMessages();
                         break;
+                    }
+                    case 'edit': {
+                        const participant = participants.get(dc);
+                        if (!participant) break;
+                        const index = messages.findIndex(x => x.id === event.value.id && x.participant.id === participant.id);
+                        if (index === -1) break;
+                        messages[index] = {...event.value, participant};
+                        broadcastMessages();
+                        break;
+                    }
                 }
 
                 dc.sendMessage(`echo: ${message}`);

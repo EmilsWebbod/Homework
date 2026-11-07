@@ -1,13 +1,14 @@
 
-export interface PeerEvent<T extends string> {
+export interface PeerEvent<T extends string, V> {
     type: T;
-    value: string;
+    value: V;
 }
 
-export type ConnectEvent = PeerEvent<'connect'>
-export type DisconnectEvent = PeerEvent<'disconnect'>
-export type ChatEvent = PeerEvent<'chat'>
-export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent;
+export type ConnectEvent = PeerEvent<'connect', string>
+export type DisconnectEvent = PeerEvent<'disconnect', string>
+export type ChatEvent = PeerEvent<'chat', string>
+export type EditEvent = PeerEvent<'edit', Pick<Message, 'id' | 'text'>>
+export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent | EditEvent;
 
 export interface Message {
     id: string;

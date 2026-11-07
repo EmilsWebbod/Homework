@@ -27,7 +27,7 @@ function App(): ReactElement {
 function Main(): ReactElement {
   const { state, onRTCEvent } = useContext(RTCContext);
   const [tab, setTab] = useState<number>(TabType.Participants)
-  const {connected, connect, disconnect, chat} = useRTCPeerConnection(onRTCEvent)
+  const {connected, connect, disconnect, chat, edit, remove} = useRTCPeerConnection(onRTCEvent)
 
   if (!connected) {
     return (
@@ -51,7 +51,7 @@ function Main(): ReactElement {
              <Participants participants={state.participants}/>
          )}
          {tab === TabType.Chat && (
-             <Chat messages={state.messages} onSend={chat}/>
+             <Chat messages={state.messages} me={state.me} onSend={chat} onEdit={edit} onDelete={remove}/>
          )}
        </Paper>
    )

@@ -22,3 +22,33 @@
     gap: var(--spacing-xs);
     font-style: italic;
 }
+
+.message__you {
+    font-style: italic;
+    font-weight: normal;
+    color: var(--color-grey-dark);
+}
+
+.message__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.message__actions {
+    display: flex;
+}
+
+.message__actions .icon-button {
+    display: flex;
+    padding: 0;
+}
+
+.message__actions svg {
+    width: 18px;
+    height: 18px;
+}
+
+.message__actions .icon-button:hover svg {
+    color: var(--color-active);
+}

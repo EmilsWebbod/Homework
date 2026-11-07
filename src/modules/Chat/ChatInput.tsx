@@ -1,28 +1,49 @@
 import './ChatInput.css';
 import {type ReactElement, type SubmitEvent, useCallback, useState} from "react";
-import {SendIcon} from "../../components/Icons/Icons.js";
+import type {EditEvent, Message} from "../../../types/messages.js";
+import {CloseIcon, SendIcon} from "../../components/Icons/Icons.js";
 
 export interface ChatInputProps {
     onSend: (message: string) => void;
 }
 
-export function ChatInput({onSend}: ChatInputProps): ReactElement {
-    const [value, setValue] = useState('');
+interface Props extends ChatInputProps {
+    // When set, the input edits this message instead of sending a new one
+    editing: Message | null;
+    onEdit: (message: EditEvent['value']) => void;
+    onCancelEdit: () => void;
+}
+
+export function ChatInput({onSend, editing, onEdit, onCancelEdit}: Props): ReactElement {
+    const [value, setValue] = useState(editing?.text ?? '');
 
     const handleOnSubmit = useCallback((event: SubmitEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        onSend(value);
+        if (editing) {
+            onEdit({id: editing.id, text: value});
+            onCancelEdit();
+        } else {
+            onSend(value);
+        }
         setValue('');
-    }, [onSend, value])
+    }, [onSend, onEdit, onCancelEdit, editing, value])
 
     return (
         <form onSubmit={handleOnSubmit}>
             <div className="chat-input">
-                <textarea value={value} onChange={e => setValue(e.target.value)} placeholder="Write to everyone"/>
+                <textarea
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                    placeholder="Write to everyone"
+                    autoFocus={!!editing}
+                />
                 <div className="chat-input__footer">
                     <div className="chat-input__actions"></div>
                     <div className="chat-input__send">
-                        <button className="icon-button"><SendIcon/></button>
+                        {editing && (
+                            <button type="button" className="icon-button" onClick={onCancelEdit} aria-label="Cancel edit"><CloseIcon/></button>
+                        )}
+                        <button className="icon-button" aria-label={editing ? 'Save edit' : 'Send'}><SendIcon/></button>
                     </div>
                 </div>
             </div>

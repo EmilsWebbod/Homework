@@ -51,6 +51,7 @@ Events the client will trigger to the backend
 ### ServerEvent
 - ParticipantsEvent: Send all participants to all users
 - MessagesEvent: Send all messages to all users
+- ConnectedEvent: Sends the connected user their own participant (id and name), only to that user
 
 ### Connection
 1. Creates a Data Channel on initial connect from user when loading the page. Saves peers in a Set on the server for now

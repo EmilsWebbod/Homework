@@ -3,9 +3,16 @@
     background: var(--paper-background);
 }
 
-.paper-title {
+.paper__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.paper__content {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
 }

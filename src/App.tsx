@@ -2,6 +2,7 @@ import {type ReactElement, useState} from 'react'
 import './App.css'
 import {Paper} from "./components/Paper/Paper.js";
 import {Tab, Tabs} from "./components/Tabs/Tabs.js";
+import {Participants} from "./modules/Participants/Participants.js";
 import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 
 function App(): ReactElement {
@@ -17,7 +18,12 @@ function App(): ReactElement {
             <Tab active>Participants (7)</Tab>
             <Tab>Chat</Tab>
           </Tabs>
+          <Participants participants={[
+            {id: '1', name: 'Emil'},
+            {id: '2', name: 'Emil 2'},
+          ]}/>
         </Paper>
+
 
         {connected ? (
             <>

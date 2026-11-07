@@ -1,0 +1,10 @@
+
+.participants {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.participant {
+
+}

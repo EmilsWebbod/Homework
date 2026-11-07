@@ -1,4 +1,4 @@
-:root {
+#root {
   --spacing-xxs: 4px;
   --spacing-xs: 8px;
   --spacing-md: 16px;
@@ -10,6 +10,9 @@
   --color-active: #0067F4;
   --background-grey: #E6E6E6;
   --paper-background: #ffffff;
+
+  text-align: left;
+  color: var(--color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -18,7 +21,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 hr {
-  margin-top: 0;
+  margin: 0;
   border: none;
   height: 2px;
   background: #D6D6D6;

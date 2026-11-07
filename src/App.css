@@ -1,12 +1,14 @@
 :root {
+  --spacing-xxs: 4px;
   --spacing-xs: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
 
+  --border-radius: 6px;
+
   --color: #1f2028;
-
-
-  --border-radius: 8px;
+  --color-active: #0067F4;
+  --background-grey: #E6E6E6;
   --paper-background: #ffffff;
 }
 

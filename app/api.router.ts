@@ -38,7 +38,10 @@ api.post('/', (req, res): void => {
                             id: randomUUID(),
                             name: event.value
                         });
-                        console.debug('Connected users', participants.size);
+                        broadcastParticipants();
+                        break;
+                    case 'disconnect':
+                        participants.delete(dc);
                         broadcastParticipants();
                         break;
                     case "chat":
@@ -58,7 +61,6 @@ api.post('/', (req, res): void => {
         dc.onClosed((): void => {
             participants.delete(dc);
             broadcastParticipants();
-            console.debug('Disconnected users left', participants.size);
         })
     })
 
@@ -74,6 +76,7 @@ api.post('/', (req, res): void => {
 })
 
 function broadcastParticipants(): void {
+    console.debug('Broadcast participants', participants.size);
     broadcast({ type: 'participants', data: [...participants.values()] })
 }
 

@@ -5,8 +5,9 @@ export interface PeerEvent<T extends string> {
 }
 
 export type ConnectEvent = PeerEvent<'connect'>
+export type DisconnectEvent = PeerEvent<'disconnect'>
 export type ChatEvent = PeerEvent<'chat'>
-export type ClientEvent = ConnectEvent | ChatEvent;
+export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent;
 
 export interface Message {
     id: string;

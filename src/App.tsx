@@ -8,7 +8,7 @@ import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 function App(): ReactElement {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
-  const {connected, connect, chat} = useRTCPeerConnection()
+  const {connected, connect, disconnect, chat} = useRTCPeerConnection()
 
   return (
     <>
@@ -47,6 +47,15 @@ function App(): ReactElement {
               </button>
             </>
         )}
+
+        {connected ? (
+            <button
+                className="counter"
+                onClick={(): void => disconnect()}
+            >
+              Disconnect
+            </button>
+        ): null}
       </section>
 
       <div className="ticks"></div>

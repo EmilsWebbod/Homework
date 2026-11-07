@@ -1,9 +1,10 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import type {ChatEvent, ConnectEvent} from "../../types/messages.js";
+import type {ChatEvent, ConnectEvent, DisconnectEvent} from "../../types/messages.js";
 
 interface RTCPeerConnectionReturn {
     connected: boolean;
     connect: (name: string) => void;
+    disconnect: () => void;
     chat: (text: string) => void;
     error: Error | null;
 }
@@ -28,7 +29,7 @@ export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
         })().catch(setError);
 
         return (): void => {
-            _peer.disconnect()
+            _peer.close()
         };
     }, [url]);
 
@@ -38,12 +39,18 @@ export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
         setConnected(true);
     }, [])
 
+    const disconnect = useCallback((): void => {
+        if (!peer.current) return;
+        peer.current.disconnect();
+        setConnected(false);
+    }, [])
+
     const chat = useCallback((text: string): void => {
         if (!peer.current) return;
         peer.current.sendChat(text);
     }, []);
 
-    return { error, connected, connect,  chat }
+    return { error, connected, connect, disconnect, chat }
 }
 
 interface RTCPeerOptions {
@@ -94,11 +101,15 @@ class RTCPeer {
         this.sendJSON({ type: 'connect', value: name } satisfies ConnectEvent);
     }
 
+    public disconnect(): void {
+        this.sendJSON({ type: 'disconnect', value: '' } satisfies DisconnectEvent);
+    }
+
     public sendChat(text: string): void {
         this.sendJSON({ type: 'chat', value: text} satisfies ChatEvent)
     }
 
-    public disconnect(): void {
+    public close(): void {
         this.canceled = true;
         this.pc.close();
         this.dc.close();

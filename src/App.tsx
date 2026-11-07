@@ -5,9 +5,15 @@ import {Tab, Tabs} from "./components/Tabs/Tabs.js";
 import {Participants} from "./modules/Participants/Participants.js";
 import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 
+const TabType = {
+  Participants: 0,
+  Chat: 1
+}
+
 function App(): ReactElement {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [tab, setTab] = useState<number>(TabType.Participants)
   const {connected, connect, disconnect, chat} = useRTCPeerConnection()
 
   return (
@@ -15,13 +21,22 @@ function App(): ReactElement {
       <section >
         <Paper title="Status meeting standup">
           <Tabs>
-            <Tab active>Participants (7)</Tab>
-            <Tab>Chat</Tab>
+            <Tab active={tab === TabType.Participants} onClick={(): void => setTab(TabType.Participants)}>
+              Participants (7)
+            </Tab>
+            <Tab active={tab === TabType.Chat} onClick={(): void => setTab(TabType.Chat)}>
+              Chat
+            </Tab>
           </Tabs>
-          <Participants participants={[
-            {id: '1', name: 'Emil'},
-            {id: '2', name: 'Emil 2'},
-          ]}/>
+          {tab === TabType.Participants && (
+              <Participants participants={[
+                {id: '1', name: 'Emil'},
+                {id: '2', name: 'Emil 2'},
+              ]}/>
+          )}
+          {tab === TabType.Chat && (
+              <div>Todo</div>
+          )}
         </Paper>
 
 

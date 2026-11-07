@@ -17,7 +17,7 @@ function App(): ReactElement {
 
   return (
     <RTCProvider>
-      <section >
+      <section className="app">
        <Main />
       </section>
     </RTCProvider>

@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import { Transform } from 'node:stream'
-import apiRouter from "./app/api.router.js";
+import api from "./app/api.router.js";
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -35,7 +35,7 @@ if (!isProduction) {
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
 
-app.use('/api', apiRouter);
+app.use('/api', express.json(), api);
 
 // Serve HTML
 app.use('*all', async (req, res) => {

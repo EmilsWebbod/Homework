@@ -3,7 +3,11 @@
 Started 08:26
 Using WebRTC ( want to learn what and how to set this up )
 
-## Steps
+## Testing
+I'm using vitest to test all functions for adding participants and messages.  
+Testing the WebRTC logic can be tricky when we need to mock server and express sessions.
+
+## Tasks
 
 - [x] Created an SSR project with vite build tools.  
 - [x] Changed to user TS for server
@@ -13,7 +17,14 @@ Using WebRTC ( want to learn what and how to set this up )
 - [x] Add option to disconnect
 - [x] Add option to edit message
 - [x] Add option to delete message
+- [ ] Refactor backend for separation of concern
+- [ ] Create automated tests for backend logic
 - [ ] Create styles from design
+- - [x] Paper
+- - [x] Tabs
+- - [ ] Participants
+- - [ ] Chat Message
+- - [ ] Chat box
 - [ ] Create participants list
 - [ ] Create chat
 - [ ] Connect actions with chat

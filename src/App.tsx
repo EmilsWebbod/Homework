@@ -1,11 +1,14 @@
 import {type ReactElement, useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 
 function App(): ReactElement {
-  const [count, setCount] = useState(0)
+  const [name, setName] = useState('')
+  const [message, setMessage] = useState('')
+  const {connected, connect, chat} = useRTCPeerConnection()
 
   return (
     <>
@@ -21,12 +24,29 @@ function App(): ReactElement {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+
+        {connected ? (
+            <>
+              <input value={message} onChange={event => setMessage(event.target.value)}/>
+            <button
+                className="counter"
+                onClick={(): void => chat(message)}
+            >
+              Send
+            </button>
+            </>
+        ) : (
+            <>
+              <input value={name} onChange={event => setName(event.target.value)}/>
+              <button
+                  className="counter"
+                  onClick={(): void => connect(name)}
+                  disabled={!name}
+              >
+                Connect
+              </button>
+            </>
+        )}
       </section>
 
       <div className="ticks"></div>

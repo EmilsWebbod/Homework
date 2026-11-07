@@ -89,7 +89,7 @@ Events the client will trigger to the backend
 - - [x] Get messages from server
 - [x] Handle joined event as message
 - [x] Handle left event as message
-- [ ] Edit message
-- [ ] Delete message
-- [ ] Fix that users are removed on closed window ( user left event )
-- [ ] Improve som visuals in chat
+- [x] Edit message
+- [x] Delete message
+- [x] Fix that users are removed on closed window ( user left event )
+- [x] Improve som visuals in chat

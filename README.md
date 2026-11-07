@@ -22,7 +22,7 @@ We create a Messages class to handle messages and storage logic (Then we can eas
 - [x] Refactor backend for separation of concern
 - - [x] Participants
 - - [x] Messages
-- [ ] Create automated tests for backend logic
+- [x] Create automated tests for backend logic
 - [ ] Create styles from design
 - - [x] Paper
 - - [x] Tabs

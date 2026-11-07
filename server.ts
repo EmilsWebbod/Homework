@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import { Transform } from 'node:stream'
-import api from "./app/api.router.js";
+import api from "./api/api.router.js";
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'

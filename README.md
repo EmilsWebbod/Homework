@@ -28,13 +28,36 @@
 - Participants object should use redis or similar to keep state. 
 - Messages should be saved in DB to not loose data
 - Events sends all the messages on new message. We should only send the latest message to all users to save bandwith
-- 
 
 ## Testing
 I'm using vitest to test all functions for adding participants and messages.  
 Testing the WebRTC logic can be tricky when we need to mock server and express sessions.
 We create a Participants class that handles users  
 We create a Messages class to handle messages and storage logic (Then we can easily change data storage setup)  
+
+## Message protocol
+
+Se [types](./types/messages.ts) if you are interested in type / interfaces 
+
+### ClientEvent
+Events the client will trigger to the backend
+- ConnectEvent: Connects the user with provided Name in value
+- DisconnectEvent: Disconnects user from from chat (remove from participants)
+- ChatEvent: Message when users click send message. Adds message into Messages class
+- EditEvent: Edits the message a user has sent
+- DeleteEvent: Delete a message a user has sent
+
+### ServerEvent
+- ParticipantsEvent: Send all participants to all users
+- MessagesEvent: Send all messages to all users
+
+### Connection
+1. Creates a Data Channel on initial connect from user when loading the page. Saves peers in a Set on the server for now
+2. Users connects by providing a name. User is added to Participants class to keep track and use for messages
+3. Users gets all Participants and Messages on connection with broadcast
+4. User can send message with chat
+5. Messages are updated for all users ( should probably ignore the user that sent it )
+6. User can disconnect 
 
 ## Tasks
 
@@ -62,6 +85,9 @@ We create a Messages class to handle messages and storage logic (Then we can eas
 - [x] Connect actions with chat
 - - [x] Send messages with send to server
 - - [x] Get messages from server
-- [ ] Handle joined event as message
-- [ ] Handle left event as message
+- [x] Handle joined event as message
+- [x] Handle left event as message
+- [ ] Edit message
+- [ ] Delete message
+- [ ] Fix that users are removed on closed window ( user left event )
 - [ ] Improve som visuals in chat

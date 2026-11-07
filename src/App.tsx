@@ -69,7 +69,7 @@ function Main(): ReactElement {
   }
 
    return (
-       <Paper title="Status meeting standup" onClose={disconnect} style={{ height: '800px', width: '500px'}} >
+       <Paper title="Status meeting standup" onClose={disconnect} style={{ height: '800px', width: '450px'}} >
          <Tabs>
            <Tab active={tab === TabType.Participants} onClick={(): void => setTab(TabType.Participants)}>
              Participants ({state.participants.length})

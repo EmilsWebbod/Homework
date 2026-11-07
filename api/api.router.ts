@@ -37,14 +37,22 @@ api.post('/', (req, res): void => {
                 // todo: should verify content is ClientEvent
                 // todo: verify that value is correct. Can use joi or something similar to verify
                 switch (event.type) {
-                    case "connect":
-                        participants.add(dc, event.value);
+                    case "connect": {
+                        const participant = participants.add(dc, event.value);
+                        messages.joined(participant);
                         broadcastParticipants();
+                        broadcastMessages();
                         break;
-                    case 'disconnect':
+                    }
+                    case 'disconnect': {
+                        const participant = participants.get(dc);
+                        if (!participant) break;
                         participants.delete(dc);
+                        messages.left(participant);
                         broadcastParticipants();
+                        broadcastMessages();
                         break;
+                    }
                     case "chat": {
                         const participant = participants.get(dc);
                         if (!participant) break;

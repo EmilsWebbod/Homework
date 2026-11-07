@@ -13,14 +13,14 @@ export class Messages {
 
     add(participant: Participant, text: string): boolean {
         // todo: We can verify if any text are not what we want and return false
-        this.messages.push({id: randomUUID(), participant, text, createdAt: this.date() })
+        this.messages.push({id: this.id(), type: 'message', participant, text, createdAt: this.date() })
         return true;
     }
 
     edit(participant: Participant, id: string, text: string): boolean {
         const index = this.messages.findIndex(x => x.id === id && x.participant.id === participant.id);
         if (index === -1) return false;
-        this.messages[index] = {id, text, participant, createdAt: this.date() };
+        this.messages[index] = { ...this.messages[index], text };
         return true;
     }
 
@@ -29,6 +29,14 @@ export class Messages {
         if (index === -1) return false;
         this.messages.splice(index, 1);
         return true;
+    }
+
+    joined(participant: Participant): void {
+        this.messages.push({ id: this.id(), type: 'joined', participant, text: '', createdAt: this.date() });
+    }
+
+    left(participant: Participant): void {
+        this.messages.push({ id: this.id(), type: 'left', participant, text: '', createdAt: this.date() });
     }
 
     array(): Message[] {
@@ -43,5 +51,9 @@ export class Messages {
 
     private date(): string {
         return new Date().toISOString()
+    }
+
+    private id(): string {
+        return randomUUID();
     }
 }

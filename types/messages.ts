@@ -13,6 +13,7 @@ export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent | EditEvent
 
 export interface Message {
     id: string;
+    type: 'message' | 'joined' | 'left';
     text: string;
     participant: Participant;
     createdAt: string;

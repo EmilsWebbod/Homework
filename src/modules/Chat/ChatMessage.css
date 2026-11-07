@@ -14,5 +14,11 @@
 
 .message__date{
     display: flex;
+}
 
+.message__status {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-style: italic;
 }

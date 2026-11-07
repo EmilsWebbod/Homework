@@ -12,6 +12,7 @@ export function ChatInput({onSend}: ChatInputProps): ReactElement {
     const handleOnSubmit = useCallback((event: SubmitEvent<HTMLFormElement>): void => {
         event.preventDefault();
         onSend(value);
+        setValue('');
     }, [onSend, value])
 
     return (

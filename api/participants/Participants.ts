@@ -11,10 +11,12 @@ export class Participants<T> extends Map<T, Participant> {
         return [...this.values()]
     }
 
-    add(id: T, name: string): void {
-        this.set(id, {
+    add(id: T, name: string): Participant {
+        const participant: Participant = {
             id: randomUUID(),
             name: name
-        });
+        }
+        this.set(id, participant);
+        return participant;
     }
 }

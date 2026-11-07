@@ -6,6 +6,8 @@ Using WebRTC ( want to learn what and how to set this up )
 ## Testing
 I'm using vitest to test all functions for adding participants and messages.  
 Testing the WebRTC logic can be tricky when we need to mock server and express sessions.
+We create a Participants class that handles users  
+We create a Messages class to handle messages and storage logic (Then we can easily change data storage setup)  
 
 ## Tasks
 
@@ -17,9 +19,9 @@ Testing the WebRTC logic can be tricky when we need to mock server and express s
 - [x] Add option to disconnect
 - [x] Add option to edit message
 - [x] Add option to delete message
-- [ ] Refactor backend for separation of concern
+- [x] Refactor backend for separation of concern
 - - [x] Participants
-- - [ ] Messages
+- - [x] Messages
 - [ ] Create automated tests for backend logic
 - [ ] Create styles from design
 - - [x] Paper

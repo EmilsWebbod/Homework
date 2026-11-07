@@ -1,7 +1,7 @@
 import {Router} from "express";
 import nodeDataChannel, {type DataChannel, type PeerConnection} from 'node-datachannel'
-import {randomUUID} from "node:crypto";
-import type {ClientEvent, Message, ServerEvent} from "../types/messages.js";
+import type {ClientEvent, ServerEvent} from "../types/messages.js";
+import {Messages} from "./messages/Messages.js";
 import {Participants} from "./participants/Participants.js";
 
 const closedStates = ['closed', 'failed'];
@@ -11,9 +11,7 @@ nodeDataChannel.initLogger('Debug', (level, message): void => {
 
 const peers = new Set<PeerConnection>()
 const participants = new Participants<DataChannel>();
-
-// todo: This is to simple setup. should be moved to DB. Not needed for this project
-const messages: Message[] = [];
+const messages = new Messages();
 
 const api = Router();
 
@@ -50,26 +48,25 @@ api.post('/', (req, res): void => {
                     case "chat": {
                         const participant = participants.get(dc);
                         if (!participant) break;
-                        messages.push({ id: randomUUID(), text: event.value, participant })
-                        broadcastMessages();
+                        if (messages.add(participant, event.value)){
+                            broadcastMessages();
+                        }
                         break;
                     }
                     case 'edit': {
                         const participant = participants.get(dc);
                         if (!participant) break;
-                        const index = messages.findIndex(x => x.id === event.value.id && x.participant.id === participant.id);
-                        if (index === -1) break;
-                        messages[index] = {...event.value, participant};
-                        broadcastMessages();
+                        if (messages.edit(participant, event.value.id, event.value.text)) {
+                            broadcastMessages();
+                        }
                         break;
                     }
                     case 'delete': {
                         const participant = participants.get(dc);
                         if (!participant) break;
-                        const index = messages.findIndex(x => x.id === event.value && x.participant.id === participant.id);
-                        if (index === -1) break;
-                        messages.splice(index, 1);
-                        broadcastMessages();
+                        if (messages.delete(participant, event.value)) {
+                            broadcastMessages();
+                        }
                         break;
                     }
                 }
@@ -103,7 +100,7 @@ function broadcastParticipants(): void {
 }
 
 function broadcastMessages(): void {
-    broadcast({ type: 'messages', data: messages })
+    broadcast({ type: 'messages', data: messages.array() })
 }
 
 function broadcast(event: ServerEvent): void {

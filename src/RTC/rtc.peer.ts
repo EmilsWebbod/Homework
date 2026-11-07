@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from "react";
-import type {ClientEvent, EditEvent} from "../../types/messages.js";
+import type {ClientEvent, EditEvent, ServerEvent} from "../../types/messages.js";
 
 export interface RTCPeerConnectionReturn {
     connected: boolean;
@@ -11,7 +11,7 @@ export interface RTCPeerConnectionReturn {
     error: Error | null;
 }
 
-export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
+export function useRTCPeerConnection(onMessage: (event: ServerEvent) => void): RTCPeerConnectionReturn {
     const peer = useRef<RTCPeer>(null);
     const [connected, setConnected] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -22,7 +22,8 @@ export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
             iceServers: [{ urls: 'stun:stun.l.google.com:19302'}]
         },
             dataChannel: 'chat',
-            apiUrl: url
+            apiUrl: '/api',
+            onMessage,
         });
         peer.current = _peer;
 
@@ -33,7 +34,7 @@ export function useRTCPeerConnection(url = '/api'): RTCPeerConnectionReturn {
         return (): void => {
             _peer.close()
         };
-    }, [url]);
+    }, [onMessage]);
 
     const connect = useCallback((name: string): void => {
         if (!peer.current) return;
@@ -69,6 +70,7 @@ interface RTCPeerOptions {
     config: RTCConfiguration;
     dataChannel: string;
     apiUrl: string;
+    onMessage: (message: ServerEvent) => void;
 }
 
 class RTCPeer {
@@ -82,12 +84,12 @@ class RTCPeer {
         this.dc = this.pc.createDataChannel(options.dataChannel);
 
         this.dc.onopen = (): void => {
-            // todo: Should we send any message here.
-            // this.dc.send('hello from browser')
+            // todo: Should we send any message here?
         }
 
         this.dc.onmessage = (e): void => {
-            console.log('server says', e.data);
+            // todo: This should be handled correctly
+            options.onMessage(JSON.parse(e.data));
         }
     }
 

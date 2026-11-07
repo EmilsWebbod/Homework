@@ -31,7 +31,7 @@ We create a Messages class to handle messages and storage logic (Then we can eas
 - - [x] Chat box
 - [x] Create participants list
 - [x] Create chat
-- [ ] Create context to keep the state in one place
+- [x] Create context to keep the state in one place
 - [ ] Connect actions with chat
 - - [ ] Send messages with send to server
 - - [ ] Get 

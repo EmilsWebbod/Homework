@@ -1,10 +1,9 @@
 import {createContext, type PropsWithChildren, type ReactElement, useCallback, useState} from "react";
-import type {Message, Participant} from "../../types/messages.js";
+import type {Message, Participant, ServerEvent} from "../../types/messages.js";
 
 interface RTCContextProps {
     state: RTCState;
-    setParticipants: (participants: Participant[]) => void;
-    setMessages: (messages: Message[]) => void;
+    onRTCEvent: (event: ServerEvent) => void;
 }
 
 interface RTCState {
@@ -17,8 +16,8 @@ export const RTCContext = createContext<RTCContextProps>({
         participants: [],
         messages: []
     },
-    setParticipants: (): void => {},
-    setMessages: (): void => {},
+    onRTCEvent: (): void => {
+    },
 })
 
 export function RTCProvider({ children }: PropsWithChildren<object>): ReactElement {
@@ -27,15 +26,20 @@ export function RTCProvider({ children }: PropsWithChildren<object>): ReactEleme
         messages: []
     });
 
-    const setParticipants = useCallback((participants: Participant[]): void => {
-        setState(s => ({ ...s, participants}));
-    },[])
+    const onRTCEvent = useCallback((event: ServerEvent): void => {
+        switch (event.type) {
+            case "participants": {
+                setState(s => ({...s, participants: event.data}));
+                break;
+            }
+            case 'messages': {
+                setState(s => ({...s, messages: event.data}));
+                break;
+            }
+        }
+    }, [])
 
-    const setMessages = useCallback((message: Message[]): void => {
-        setState(s => ({ ...s, message}));
-    },[])
-
-    return <RTCContext.Provider value={{ state, setParticipants, setMessages }}>
+    return <RTCContext.Provider value={{state, onRTCEvent}}>
         {children}
     </RTCContext.Provider>
 }

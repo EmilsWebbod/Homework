@@ -70,8 +70,6 @@ api.post('/', (req, res): void => {
                         break;
                     }
                 }
-
-                dc.sendMessage(`echo: ${message}`);
             } catch (e) {
                 console.error('error on message', e);
             }

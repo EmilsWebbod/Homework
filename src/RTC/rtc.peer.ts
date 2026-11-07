@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import type {ClientEvent, EditEvent} from "../../types/messages.js";
 
-interface RTCPeerConnectionReturn {
+export interface RTCPeerConnectionReturn {
     connected: boolean;
     connect: (name: string) => void;
     disconnect: () => void;

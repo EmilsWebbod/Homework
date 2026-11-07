@@ -7,12 +7,14 @@ interface RTCContextProps {
 }
 
 interface RTCState {
+    me: Participant | null;
     participants: Participant[];
     messages: Message[];
 }
 
 export const RTCContext = createContext<RTCContextProps>({
     state: {
+        me: null,
         participants: [],
         messages: []
     },
@@ -22,12 +24,17 @@ export const RTCContext = createContext<RTCContextProps>({
 
 export function RTCProvider({ children }: PropsWithChildren<object>): ReactElement {
     const [state, setState] = useState<RTCState>({
+        me: null,
         participants: [],
         messages: []
     });
 
     const onRTCEvent = useCallback((event: ServerEvent): void => {
         switch (event.type) {
+            case 'connected': {
+                setState(s => ({...s, me: event.data}));
+                break;
+            }
             case "participants": {
                 setState(s => ({...s, participants: event.data}));
                 break;

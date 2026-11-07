@@ -37,6 +37,7 @@ api.post('/', (req, res): void => {
                 switch (event.type) {
                     case "connect": {
                         const participant = participants.add(dc, event.value);
+                        send(dc, { type: 'connected', data: participant });
                         messages.joined(participant);
                         broadcastParticipants();
                         broadcastMessages();
@@ -106,6 +107,10 @@ function broadcastParticipants(): void {
 
 function broadcastMessages(): void {
     broadcast({ type: 'messages', data: messages.array() })
+}
+
+function send(dc: DataChannel, event: ServerEvent): void {
+    if (dc.isOpen()) dc.sendMessage(JSON.stringify(event))
 }
 
 function broadcast(event: ServerEvent): void {

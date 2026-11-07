@@ -31,4 +31,10 @@ interface DataEvent<T extends string, D extends object> {
 
 export type ParticipantsEvent = DataEvent<'participants', Participant>;
 export type MessagesEvent = DataEvent<'messages', Message>;
-export type ServerEvent = ParticipantsEvent | MessagesEvent;
+// Sent only to the user who connected, so they know their own participant id
+export interface ConnectedEvent {
+    type: 'connected';
+    data: Participant;
+}
+
+export type ServerEvent = ParticipantsEvent | MessagesEvent | ConnectedEvent;

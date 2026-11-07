@@ -10,9 +10,10 @@ describe('Messages', (): void => {
     test('that messages is created and can add and delete', (): void => {
         const messages = new Messages();
         messages.add(participants.get(0), 'Message');
-        const list = messages.array();
+        expect(messages.getFromIndex(0)).to.have.keys(['id', 'participant', 'text', 'createdAt'])
         expect(messages.size).to.equal(1)
-        messages.delete(participants.get(0), list[0].id);
+        messages.delete(participants.get(0), messages.getFromIndex(0).id);
+        expect(messages.size).to.equal(0)
     })
 
     test('that messages can be edited and only from user that edited', (): void => {

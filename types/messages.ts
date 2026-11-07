@@ -15,6 +15,7 @@ export interface Message {
     id: string;
     text: string;
     participant: Participant;
+    createdAt: string;
 }
 
 export interface Participant {

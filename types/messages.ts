@@ -8,7 +8,8 @@ export type ConnectEvent = PeerEvent<'connect', string>
 export type DisconnectEvent = PeerEvent<'disconnect', string>
 export type ChatEvent = PeerEvent<'chat', string>
 export type EditEvent = PeerEvent<'edit', Pick<Message, 'id' | 'text'>>
-export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent | EditEvent;
+export type DeleteEvent = PeerEvent<'delete', string>
+export type ClientEvent = ConnectEvent | DisconnectEvent | ChatEvent | EditEvent | DeleteEvent;
 
 export interface Message {
     id: string;

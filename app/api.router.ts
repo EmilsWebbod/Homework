@@ -64,6 +64,15 @@ api.post('/', (req, res): void => {
                         broadcastMessages();
                         break;
                     }
+                    case 'delete': {
+                        const participant = participants.get(dc);
+                        if (!participant) break;
+                        const index = messages.findIndex(x => x.id === event.value && x.participant.id === participant.id);
+                        if (index === -1) break;
+                        messages.splice(index, 1);
+                        broadcastMessages();
+                        break;
+                    }
                 }
 
                 dc.sendMessage(`echo: ${message}`);

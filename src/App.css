@@ -35,8 +35,13 @@ body {
   line-height: 1.5;
 }
 
-#app {
-  height: 100%;
+.app {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background: var(--color-grey);
 }
 
 button,

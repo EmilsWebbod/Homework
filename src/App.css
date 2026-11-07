@@ -1,2 +1,35 @@
 :root {
+  --spacing-xs: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+
+  --color: #1f2028;
+
+
+  --border-radius: 8px;
+  --paper-background: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color);
+  margin: 0;
+}
+
+hr {
+  margin-top: 0;
+  border: none;
+  height: 2px;
+  background: #D6D6D6;
+}
+
+svg {
+  color: black;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }

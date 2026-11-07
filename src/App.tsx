@@ -1,5 +1,6 @@
 import {type ReactElement, useState} from 'react'
 import './App.css'
+import {Paper} from "./components/Paper/Paper.js";
 import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 
 function App(): ReactElement {
@@ -9,7 +10,8 @@ function App(): ReactElement {
 
   return (
     <>
-      <section id="center">
+      <section >
+        <Paper title="Status meeting standup">Some content</Paper>
 
         {connected ? (
             <>

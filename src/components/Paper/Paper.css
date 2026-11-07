@@ -1,0 +1,11 @@
+.paper {
+    border-radius: var(--border-radius);
+    background: var(--paper-background);
+}
+
+.paper-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+}

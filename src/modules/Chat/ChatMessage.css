@@ -1,0 +1,18 @@
+
+.message {
+    display: flex;
+    flex-direction: column;
+}
+
+.message__title {
+    display: flex;
+    justify-content: space-between;
+}
+.message__name {
+    font-weight: bold;
+}
+
+.message__date{
+    display: flex;
+
+}

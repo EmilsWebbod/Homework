@@ -27,7 +27,7 @@ We create a Messages class to handle messages and storage logic (Then we can eas
 - - [x] Paper
 - - [x] Tabs
 - - [x] Participants
-- - [ ] Chat Message
+- - [x] Chat Message
 - - [ ] Chat box
 - [ ] Create participants list
 - [ ] Create chat

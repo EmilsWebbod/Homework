@@ -1,7 +1,9 @@
 import {type ReactElement, useState} from 'react'
 import './App.css'
+import {mockMessages, mockParticipants} from "../mock/mock.js";
 import {Paper} from "./components/Paper/Paper.js";
 import {Tab, Tabs} from "./components/Tabs/Tabs.js";
+import {Chat} from "./modules/Chat/Chat.js";
 import {Participants} from "./modules/Participants/Participants.js";
 import {useRTCPeerConnection} from "./RTC/rtc.peer.js";
 
@@ -19,7 +21,7 @@ function App(): ReactElement {
   return (
     <>
       <section >
-        <Paper title="Status meeting standup">
+        <Paper title="Status meeting standup" style={{ height: '800px', width: '500px'}} >
           <Tabs>
             <Tab active={tab === TabType.Participants} onClick={(): void => setTab(TabType.Participants)}>
               Participants (7)
@@ -29,13 +31,10 @@ function App(): ReactElement {
             </Tab>
           </Tabs>
           {tab === TabType.Participants && (
-              <Participants participants={[
-                {id: '1', name: 'Emil'},
-                {id: '2', name: 'Emil 2'},
-              ]}/>
+              <Participants participants={mockParticipants}/>
           )}
           {tab === TabType.Chat && (
-              <div>Todo</div>
+              <Chat messages={mockMessages} />
           )}
         </Paper>
 

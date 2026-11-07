@@ -15,6 +15,35 @@
   color: var(--color);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+#app {
+  height: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: var(--color);
   margin: 0;

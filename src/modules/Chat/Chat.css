@@ -1,0 +1,8 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    overflow-y: scroll;
+    height: calc(100% - 48px);
+    padding: 0 var(--spacing-xs);
+}

@@ -1,6 +1,13 @@
 import {createContext, type PropsWithChildren, type ReactElement, useCallback, useState} from "react";
 import type {Message, Participant, ServerEvent} from "../../types/messages.js";
 
+/**
+ * This was probably a mistake to add this into RTC. Its very simple and easy to undertand.
+ * Participants and Chat should have their own context to use.
+ * Then listen to a global event to check if any new participants or messages was received.
+ *
+ */
+
 interface RTCContextProps {
     state: RTCState;
     onRTCEvent: (event: ServerEvent) => void;

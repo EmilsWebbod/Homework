@@ -9,12 +9,14 @@ nodeDataChannel.initLogger('Debug', (level, message): void => {
     console.log(level, message)
 })
 
+// todo: Peers should have its own class and handle that internally.
 const peers = new Set<PeerConnection>()
 const participants = new Participants<DataChannel>();
 const messages = new Messages();
 
 const api = Router();
 
+// todo: create api.controllers for move this into.
 api.post('/', (req, res): void => {
     const { sdp, type } = req.body;
     const pc = new nodeDataChannel.PeerConnection('server', {
@@ -32,6 +34,7 @@ api.post('/', (req, res): void => {
             if (typeof message !== 'string') return;
             try {
                 const event: ClientEvent = JSON.parse(message);
+                // todo: Should have moved this into our own api.message file that handles the different messages from the client
                 // todo: should verify content is ClientEvent
                 // todo: verify that value is correct. Can use joi or something similar to verify
                 switch (event.type) {
@@ -94,6 +97,9 @@ api.post('/', (req, res): void => {
     peers.add(pc)
 })
 
+// todo: Broadcast logic should be in its own logic. Using events created from Participants or Messages.
+// example: broadcast(messages.eventData())
+// Then we separate the broadcast and messages logic. And we can have test to verify that the data object is correct
 function leave(dc: DataChannel): void {
     const participant = participants.get(dc);
     if (!participant) return;

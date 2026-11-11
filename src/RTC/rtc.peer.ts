@@ -1,6 +1,14 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import type {ClientEvent, EditEvent, ServerEvent} from "../../types/messages.js";
 
+/**
+ * I think this has to much logic. Would have thought about how to separate the events from this class, to only handle RTC.
+ * Each event would have meen dealt with the Participant and Messages module and used this to sendt our events.
+ * Better to have used a Context and used the send() / onMessage() to send and listen to events int the respective modules.
+ * This was easier to keep context and logic in one place on learning and setting this up for the first time.
+ * We could still have validation of data sent and received.
+ */
+
 export interface RTCPeerConnectionReturn {
     connected: boolean;
     connect: (name: string) => void;

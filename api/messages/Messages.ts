@@ -1,6 +1,11 @@
 import {randomUUID} from "node:crypto";
 import type {Message, Participant} from "../../types/messages.js";
 
+/**
+ * todo: Messages should be saved in a DB of some kind.
+ * @remarks The functions would them become async and needs to be processed correctly in the message handler.
+ */
+//
 export class Messages {
     private messages: Message[] = []
 

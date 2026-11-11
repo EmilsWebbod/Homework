@@ -3,7 +3,7 @@ import express from 'express'
 import { Transform } from 'node:stream'
 import api from "./api/api.router.js";
 
-// Constants
+// Constants todo: These should be in its own file and importent. So we dont use process.env all over the place for global vars
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
 const base = process.env.BASE || '/'
@@ -38,6 +38,7 @@ if (!isProduction) {
 app.use('/api', express.json(), api);
 
 // Serve HTML
+// todo: Set up our own controller file that handles this.
 app.use('*all', async (req, res) => {
   try {
     const url = req.originalUrl.replace(base, '')
